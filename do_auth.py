@@ -553,7 +553,7 @@ def main():
     # Not very good, but will do for now
     # I don't use any other service other than shell to test!
     the_command = ""
-    return_pairs = ""
+    return_pairs = []
 
     if not len(av_pairs) > 0:
         log.info('No av pairs!!')
@@ -716,6 +716,11 @@ def main():
         want_tac_pairs = False
         if config.has_option(this_group, "av_pairs"):
             temp_av_pairs = get_attribute(config, this_group, "av_pairs", filename)
+            for av_pair_item in temp_av_pairs: 
+                if "priv-lvl" in av_pair_item: 
+                    for tacacs_conf_av_item in av_pairs:
+                        if "priv-lvl" in tacacs_conf_av_item: return_pairs.append(av_pair_item.replace(' ',''))
+
             log.debug('temp_av_pairs = %r', temp_av_pairs)
             log.debug('return_pairs = %r', return_pairs)
 
